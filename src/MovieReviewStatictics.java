@@ -32,8 +32,8 @@ public class MovieReviewStatictics
     public static String CHUNKER_MODEL = "models/en-chunker.bin";
     public static String LEMMATIZER_DICT = "models/en-lemmatizer.dict";
     public static String NAME_MODEL = "models/en-ner-person.bin";
-    public static String LOCATION_MODEL = "models/en-ner-person.bin";
-    public static String ORGANIZATION_MODEL = "models/en-ner-person.bin";
+    public static String LOCATION_MODEL = "models/en-ner-location.bin";
+    public static String ORGANIZATION_MODEL = "models/en-ner-organization.bin";
 
     public static String ENTITY_XYZ_MODEL = "models/en-ner-xxx.bin";
 
@@ -119,7 +119,7 @@ public class MovieReviewStatictics
             nfModelFile = new File(LOCATION_MODEL);
             _placesModel  = new TokenNameFinderModel(nfModelFile);
 
-            nfModelFile = new File(LOCATION_MODEL);
+            nfModelFile = new File(ORGANIZATION_MODEL);
             _organizationsModel = new TokenNameFinderModel(nfModelFile);
 
         } catch (IOException ex)
@@ -183,7 +183,7 @@ public class MovieReviewStatictics
         {
             String preparedToken = token.toLowerCase().replaceAll("[^a-z0-9]", ""); //thereafter, ignore "" tokens
             if(!preparedToken.equals("")){
-                stems.add(preparedToken);
+                stems.add(_stemmer.stem(preparedToken));
             }
         }
         noStemmed = stems.size();
